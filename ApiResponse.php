@@ -72,8 +72,8 @@ class ApiResponse
 	{
 		if (is_object($json_obj)) {
 			$this->result_ok = $json_obj->result_ok;
-			$this->code = $json_obj->code;
-			$this->message = $json_obj->message;
+			$this->code = isset($json_obj->code) ? $json_obj->code : 0;
+			$this->message = isset($json_obj->message) ? $json_obj->message : null;
 			// Add meta data
 			if (isset($json_obj->total_count)) {
 				$this->total_count = $json_obj->total_count;
@@ -81,7 +81,7 @@ class ApiResponse
 				$this->total_pages = $json_obj->total_pages;
 				$this->results_per_page = $json_obj->results_per_page;
 			}
-			$this->data = $json_obj->data;
+			$this->data = isset($json_obj->data) ? $json_obj->data : null;
 		}
 	}
 
