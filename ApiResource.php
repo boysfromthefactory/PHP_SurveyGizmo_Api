@@ -253,7 +253,7 @@ class ApiResource
 	 * @param (ID's to request resources)
 	 * @return mixed
 	 */
-	public static function get()
+	public static function get($id)
 	{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
