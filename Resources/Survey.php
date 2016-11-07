@@ -265,6 +265,9 @@ class Survey extends ApiResource
 	{
 		$return = array();
 		$teams = $this->team;
+        if(!is_array($teams)) {
+            $teams = [$teams];
+        }
 		foreach ($teams as $obj) {
 			$team = $this->formatTeam($obj);
 			$return[] = $team;
@@ -311,7 +314,7 @@ class Survey extends ApiResource
 	 */
 	private function formatTeam($team_info)
 	{
-		$team = Team::get($team_info->id);
+		$team = is_object($team_info) ? Team::get($team_info->id) : Team::get($team_info);
 		return $team;
 	}
 
