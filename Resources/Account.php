@@ -36,7 +36,7 @@ class Account extends ApiResource
 	 * @static
 	 * @return SurveyGizmo\Account Object
 	 */
-	public static function get()
+	public static function get($id=null)
 	{
 		if (!self::$_instance) {
 			self::$_instance = self::_get();
