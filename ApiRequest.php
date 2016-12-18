@@ -211,28 +211,29 @@ class ApiRequest
 		return $response;
 	}
 
-	/**
-	 * Sets misc. options on the request, such as the page number and results per page for the API.
-	 * Uses the same array that would be passed to a fetch method (e.g. Survey::fetch(null, array()))
-	 * @access public
-	 * @return void
-	 */
-	public function setOptions(array $options = null)
-	{
-		// Page # (default to first)
-		if ($options['page'] >= 1) {
-			$this->page = $options['page'];
-		} else {
-			$this->page = 1;
-		}
+    /**
+     * Sets misc. options on the request, such as the page number and results per page for the API.
+     * Uses the same array that would be passed to a fetch method (e.g. Survey::fetch(null, array()))
+     * @access public
+     *
+     * @param array $options
+     */
+    public function setOptions(array $options = null)
+    {
+        // Page # (default to first)
+        if (isset($options['page']) && $options['page'] >= 1) {
+            $this->page = $options['page'];
+        } else {
+            $this->page = 1;
+        }
 
-		// Results per page (default to 50)
-		if ($options['limit'] >= 1) {
-			$this->limit = $options['limit'];
-		} else {
-			$this->limit = 50;
-		}
-	}
+        // Results per page (default to 50)
+        if (isset($options['limit']) && $options['limit'] >= 1) {
+            $this->limit = $options['limit'];
+        } else {
+            $this->limit = 50;
+        }
+    }
 
 	/**
 	 * Method to change the URL of the REST API domain for development purposes.
