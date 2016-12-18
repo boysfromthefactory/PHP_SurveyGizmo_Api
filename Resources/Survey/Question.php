@@ -47,23 +47,6 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Get Question Obj by survey id and question id
-	 * @access public
-	 * @param int $survey_id - survey id
-	 * @param int $id - question id
-	 * @return SurveyGizmo\Question Object
-	 */
-	public static function get($survey_id, $id){
-		if ($id < 1 && $survey_id < 1) {
-			throw new SurveyGizmoException(500, "IDs required");
-		}
-		return self::_get(array(
-			'survey_id' => $survey_id,
-			'id' => $id,
-		));
-	}
-
-	/**
 	 * Save current Question Obj
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Object
