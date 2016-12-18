@@ -32,23 +32,6 @@ class Page extends ApiResource {
 	}
 
 	/**
-	 * Get Page Obj by survey id and page id
-	 * @access public
-	 * @param int $survey_id - survey id
-	 * @param int $id - page id
-	 * @return SurveyGizmo\Page Object 
-	 */
-	public static function get($survey_id, $id){
-		if ($id < 1 && $survey_id < 1) {
-			throw new SurveyGizmoException(500, "IDs required");
-		}
-		return self::_get(array(
-			'survey_id' => $survey_id,
-			'id' => $id,
-		));
-	}
-
-	/**
 	 * Save current Page Obj
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Object
