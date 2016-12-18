@@ -7,11 +7,11 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 /**
  * Class for Survey API objects - the blood and soul of SurveyGizmo!
  */
-class Survey extends ApiResource 
+class Survey extends ApiResource
 {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{id}";
 
@@ -43,7 +43,7 @@ class Survey extends ApiResource
 	{
 		return self::_fetch(array('id' => ''), $filter, $options);
 	}
-	
+
 	/**
 	 * Get Survey object by survey id
 	 * @access public
@@ -122,7 +122,7 @@ class Survey extends ApiResource
 	{
 		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Question", $filter, $options);
 	}
-	
+
 	/**
 	 * Return question from current Survey by question id
 	 * @access public
@@ -225,37 +225,51 @@ class Survey extends ApiResource
 		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\Campaign", $id);
 	}
 
-	/*HELPERS*/
-	/**
-	 * Helper function to get Survey sub objects
-	 * @access private
-	 * @param String $type - class name of object requested
-	 * @param SurveyGizmo\Filter $filter - filter object
-	 * @param Array $options
-	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\{$type} Object
-	 */
-	private function getSubObjects($type, $filter = null, $options = null)
-	{
-		$options = (isset($options))? $options: array();
-		$options["survey_id"] = $this->id;
-		return $type::fetch($this->id, $filter, $options);
-	}
+    /*HELPERS*/
+    /**
+     * Helper function to get Survey sub objects
+     * @access   private
+     *
+     * @param String $type - class name of object requested
+     * @param null   $filters
+     * @param Array  $options
+     *
+     * @return ApiResponse Object with SurveyGizmo\{$type} Object
+     * Object
+     * @internal param Filter $filter - filter object
+     */
+    private function getSubObjects($type, $filters = null, $options = null)
+    {
+        return $type::_fetch(
+            [
+                'survey_id' => $this->id,
+                'id'        => null,
+            ],
+            $filters,
+            $options
+        );
+    }
 
-	/**
-	 * Helper function to get a single Survey sub object
-	 * @access private
-	 * @param String $type - class name of object requested
-	 * @param Int $id - sub object id
-	 * @return SurveyGizmo\{$type} Object
-	 */
-	private function getSubObject($type, $id)
-	{
-		return $type::get($this->id, $id);
-	}
+    /**
+     * Helper function to get a single Survey sub object
+     * @access private
+     *
+     * @param String $type - class name of object requested
+     * @param Int    $id   - sub object id
+     *
+     * @return mixed {$type} Object
+     */
+    private function getSubObject($type, $id)
+    {
+        return $type::_get([
+            'survey_id' => $this->id,
+            'id'        => $id,
+        ]);
+    }
 
 	/*FORMATERS*/
 	/**
-	 * Format teams! We want to keep things useable and organized, 
+	 * Format teams! We want to keep things useable and organized,
 	 * hence the custom formatter for teams
 	 * Loops through teams, formats the team
 	 * @access private
@@ -276,9 +290,9 @@ class Survey extends ApiResource
 	}
 
 	/**
-	 * Format pages! We want to keep things useable and organized, 
+	 * Format pages! We want to keep things useable and organized,
 	 * hence the custom formatter for pages
-	 * Loops through pages, formats the page, and each page formats its questions. 
+	 * Loops through pages, formats the page, and each page formats its questions.
 	 * @access private
 	 * @return void
 	 */
@@ -336,7 +350,7 @@ class Survey extends ApiResource
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * Format individual question options
 	 * @access private

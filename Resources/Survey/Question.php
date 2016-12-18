@@ -31,22 +31,6 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Fetch list of SurveyGizmo Question Objects by survey id
-	 * @access public
-	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
-	 * @param Array $options
-	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Objects
-	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
-		if ($survey_id < 1) {
-			throw new SurveyGizmoException(500, "Missing survey ID");
-		}
-		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
-		return $response;
-	}
-
-	/**
 	 * Save current Question Obj
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Object

@@ -11,28 +11,12 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Page extends ApiResource {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveypage/{id}";
 
-	/**
-	 * Fetch list of SurveyGizmo Page Objects
-	 * @access public
-	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
-	 * @param Array $options
-	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Objects
-	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
-		if ($survey_id < 1) {
-			throw new SurveyGizmoException(500, "Missing survey ID");
-		}
-		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
-		return $response;
-	}
-
-	/**
-	 * Save current Page Obj
+    /**
+     * Save current Page Obj
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Object
 	 */
@@ -42,7 +26,7 @@ class Page extends ApiResource {
 			'id' => $this->exists() ? $this->id : ''
 		));
 	}
-	
+
 	/**
 	 * Delete current Page Obj
 	 * @access public
