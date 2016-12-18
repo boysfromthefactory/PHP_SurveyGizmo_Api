@@ -10,51 +10,52 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class ApiResource
 {
 	/**
-	 * Fetches a list of resources using a HTTP GET request.
-	 * @access public
-	 * @static
-	 * @param $params array (the parameters for the path, default null)
-	 * @param $filter SurveyGizmo\Helpers\Filter (optional)
-	 * @param $options array ('class' => class name to instantiate, optional)
-	 * @return SurveyGizmo\Helpers\ApiResponse
-	 */
-	public static function _fetch($params = null, $filter = null, $options = null)
-	{
-		// Get the URL string
-		$path = self::_mergePath(static::$path, $params);
+     * Fetches a list of resources using a HTTP GET request.
+     * @access public
+     * @static
+     * @param $params  array (the parameters for the path, default null)
+     * @param $filter  SurveyGizmo\Helpers\Filter (optional)
+     * @param $options array ('class' => class name to instantiate, optional)
+     * @return SurveyGizmo\Helpers\ApiResponse
+     */
+    public static function _fetch($params = null, $filter = null, $options = null)
+    {
+        // Get the URL string
+        $path = self::_mergePath(static::$path, $params);
 
-		// New request instance
-		$request = new ApiRequest("GET");
-		$request->path = $path;
-		$request->filter = $filter;
-		// Add options such as `page`, `limit` to request
-		$request->setOptions($options);
-		// Execute request
-		$request->execute();
+        // New request instance
+        $request         = new ApiRequest("GET");
+        $request->path   = $path;
+        $request->filter = $filter;
+        // Add options such as `page`, `limit` to request
+        $request->setOptions($options);
+        // Execute request
+        $request->execute();
 
-		// Instance of SurveyGizmo\Helpers\ApiResponse
-		$response = $request->getResponse();
+        // Instance of SurveyGizmo\Helpers\ApiResponse
+        $response = $request->getResponse();
 
-		// Process the return
-		if ($response->data) {
-			// Determine the name of the class that will be instantiated
-			$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
-			// Form objects from the data returned from the API
-			$response->data = self::_parseObjects($class_name, $response->data);
-			// Add extra parameters to each instance (e.g. survey_id)
-			if (is_array($params)) {
-				foreach ($response->data as $object) {
-					foreach ($params as $key => $value) {
-						if (!empty($value) && !isset($object->{$key})) {
-							$object->{$key} = $value;
-						}
-					}
-				}
-			}
-		}
-		// Return the modified ApiResponse
-		return $response;
-	}
+        // Process the return
+        if ($response->data) {
+            // Determine the name of the class that will be instantiated
+            $class_name = is_array($options) && isset($options['class']) ? $options['class'] : get_called_class();
+            // Form objects from the data returned from the API
+            $response->data = self::_parseObjects($class_name, $response->data);
+            // Add extra parameters to each instance (e.g. survey_id)
+            if (is_array($params)) {
+                foreach ($response->data as $object) {
+                    foreach ($params as $key => $value) {
+                        if (!empty($value) && !isset($object->{$key})) {
+                            $object->{$key} = $value;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Return the modified ApiResponse
+        return $response;
+    }
 	
 	/**
 	 * Returns the specific instance of a resource using an HTTP GET.
@@ -233,30 +234,38 @@ class ApiResource
 
 	//BASE FUNCTIONS
 
-	/**
-	 * Method to retrieve a list of resources. By default this method is not supported.
-	 * Extend in order to change behavior.
-	 * @access public
-	 * @static
-	 * @return SurveyGizmo\Helpers\ApiResponse
-	 */
-	public static function fetch()
-	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
-	}
+    /**
+     * Method to retrieve a list of resources. By default this method is not supported.
+     * Extend in order to change behavior.
+     * @access public
+     * @static
+     *
+     * @param null $filter
+     * @param null $options
+     *
+     * @return SurveyGizmo\Helpers\ApiResponse
+     * @throws SurveyGizmoException
+     */
+    public static function fetch($filter = null, $options = null)
+    {
+        throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+    }
 
-	/**
-	 * Method to retrieve a single resource instance. By default this method is not supported.
-	 * Extend in order to change behavior.
-	 * @access public
-	 * @static
-	 * @param (ID's to request resources)
-	 * @return mixed
-	 */
-	public static function get($id)
-	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
-	}
+    /**
+     * Method to retrieve a single resource instance. By default this method is not supported.
+     * Extend in order to change behavior.
+     * @access public
+     * @static
+     *
+     * @param  (ID's to request resources)
+     *
+     * @return mixed
+     * @throws SurveyGizmoException
+     */
+    public static function get($id)
+    {
+        throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+    }
 
 	/**
 	 * Save the instance of this resource. By default this method is not supported.
