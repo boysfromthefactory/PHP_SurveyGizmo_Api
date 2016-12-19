@@ -1,7 +1,7 @@
 {
     "name": "surveygizmoofficial/php_surveygizmo_api",
     "description": "Official PHP library for SurveyGizmo API",
-    "version": "0.5",
+    "version": "0.4",
     "require": {},
     "autoload": {
 	    "psr-4": {
