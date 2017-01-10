@@ -4,8 +4,11 @@
     "version": "0.4",
     "require": {},
     "autoload": {
-	    "psr-4": {
-	      "SurveyGizmo\\": ""
-	    }
+        "psr-4": {
+            "SurveyGizmo\\": ""
+        },
+        "classmap": [
+            "SurveyGizmo.php"
+        ]	    
     }
 }
